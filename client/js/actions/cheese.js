@@ -1,27 +1,41 @@
-export const FETCH_CHEESES_SUCCEESS = 'FETCH_CHEESES_SUCCEESS';
-export const fetchCheesesSucceess = (data) => ({
-  type: FETCH_CHEESES_SUCCEESS,
-  cheese: data
+export const FETCH_CHEESES_SUCCESS = 'FETCH_CHEESES_SUCCESS';
+export const fetchCheesesSuccess = (data) => ({
+  type: FETCH_CHEESES_SUCCESS,
+  data
 })
 
 export const FETCH_CHEESES_ERROR = 'FETCH_CHEESES_ERROR';
 export const fetchCheesesError = (data) => ({
   type: FETCH_CHEESES_ERROR,
-  cheese: data
+  error
 })
 
 
-export const FETCH_CHEESES = 'FETCH_CHEESES';
-export const fetchCheeses = () => dispatch => {
-  return fetch('http://localhost:8080').then(response => {
-    if (!response.ok) {
-      throw new Error(response.statusText);
-     }
-     return response.json();
-  }).then(data => {
-    dispatch(fetchCheesesSucceess(data));
-  }).catch(error => {
-    dispatch(fetchCheesesError(error));
-  });
+export const FETCH_CHEESES_REQUEST = 'FETCH_CHEESES_REQUEST';
+export const fetchCheeseRequest = ()=>({
+  type: FETCH_CHEESES_REQUEST
+})
 
+
+
+
+export const fetchCheeses = () => {
+  return (dispatch) => {
+    dispatch(fetchCheesesRequest());
+
+    return fetch('http://localhost:8080/cheeses')
+    .then(response => {
+    	if (!response.ok) {
+    		throw new Error(response.statusText);
+    	}
+      console.log(response);
+    	return response.json();
+    })
+    .then(json => {
+    	dispatch(fetchCheesesSuccess(json.cheeses));
+    })
+    .catch(error => {
+    	dispatch(fetchCheesesError(error));
+    })
+  }
 }
