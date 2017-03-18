@@ -78,6 +78,7 @@
     "node-sass": "^3.8.0",
     "nodemon": "^1.10.0",
     "npm-run-all": "^3.0.0",
+    "redux-logger": "^2.8.2",
     "webpack": "^1.13.1"
   },
   "dependencies": {

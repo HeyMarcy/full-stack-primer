@@ -21,9 +21,9 @@ const initialState = {
 
       case FETCH_CHEESES_ERROR:
           return {...state, loading:false, error:action.error};
-  }
 
-  return state;
+      default: return state;
+  }
 };
 
 export default cheeseReducer;

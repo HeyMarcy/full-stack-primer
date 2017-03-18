@@ -5,34 +5,27 @@ export const fetchCheesesSuccess = (data) => ({
 })
 
 export const FETCH_CHEESES_ERROR = 'FETCH_CHEESES_ERROR';
-export const fetchCheesesError = (data) => ({
+export const fetchCheesesError = (error) => ({
   type: FETCH_CHEESES_ERROR,
   error
 })
-
 
 export const FETCH_CHEESES_REQUEST = 'FETCH_CHEESES_REQUEST';
 export const fetchCheeseRequest = ()=>({
   type: FETCH_CHEESES_REQUEST
 })
 
-
-
-
 export const fetchCheeses = () => {
   return (dispatch) => {
-    dispatch(fetchCheesesRequest());
+    dispatch(fetchCheeseRequest());
 
     return fetch('http://localhost:8080/cheeses')
     .then(response => {
-    	if (!response.ok) {
-    		throw new Error(response.statusText);
-    	}
       console.log(response);
     	return response.json();
     })
     .then(json => {
-    	dispatch(fetchCheesesSuccess(json.cheeses));
+    	dispatch(fetchCheesesSuccess(json));
     })
     .catch(error => {
     	dispatch(fetchCheesesError(error));
